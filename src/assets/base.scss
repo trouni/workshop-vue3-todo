@@ -1,0 +1,20 @@
+html {
+  background: rgba(#35495e,0.03);
+}
+
+body, button, input, textarea {
+  font-family: Poppins, Helvetica, Arial, sans-serif;
+}
+
+h3, p, input, textarea {
+  margin: 0;
+}
+
+input, textarea {
+  border: none;
+  background: none;
+  &:focus {
+    outline: none;
+    background-color: rgba(#41B883, 0.1);
+  }
+}
