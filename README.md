@@ -68,7 +68,6 @@ Not required, but you can also install these useful tools:
 ```
 
 
-
 ### Creating your first components
 
 Create a new `/components/TasksList.vue` file with the following code:
@@ -527,7 +526,6 @@ Let's only show the inputs after we click on the `+` button.
 ## Bonus
 
 
-
 ### Persist Data with `localStorage`
 
 We can easily store the `tasks` array directly in the user's browser:
@@ -546,7 +544,6 @@ watch(tasks, (newX) => {
 // ...
 </script>
 ```
-
 
 
 ### Send Data to Parent Components using Custom Events
@@ -596,7 +593,6 @@ The parent component `TasksList` listens for the custom `add-task` event, and ca
   <!-- ... -->
 </template>
 ```
-
 
 
 ### Mark Tasks as Done
@@ -703,11 +699,10 @@ Finally, update your `TaskCard` component in your `TasksList.vue` file to pass t
 ```
 
 
+
 ### The Finished App
 
 You can view the finished code for the app [here](https://github.com/trouni/workshop-vue3-todo/tree/solution).
-
-
 
 ## What to look at next?
 
