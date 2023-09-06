@@ -162,7 +162,7 @@ You can use this styling I prepared for the card, but we should first move the t
 </style>
 ```
 
-
+---
 
 ## Making dynamic components
 
@@ -250,7 +250,7 @@ We can now pass the `title` and `description` from the parent component instead:
 />
 ```
 
-
+---
 
 ## Vue Directives
 
@@ -521,7 +521,7 @@ Let's only show the inputs after we click on the `+` button.
 </template>
 ```
 
-
+---
 
 ## Bonus
 
@@ -698,11 +698,13 @@ Finally, update your `TaskCard` component in your `TasksList.vue` file to pass t
 </template>
 ```
 
+---
 
-
-### The Finished App
+## The Finished App
 
 You can view the finished code for the app [here](https://github.com/trouni/workshop-vue3-todo/tree/solution).
+
+---
 
 ## What to look at next?
 
