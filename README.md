@@ -7,11 +7,7 @@
 
 Learn how to build <a href="https://trouni-vue-task-manager.netlify.app/" target="_blank">this simple Todo app</a>.
 
-**REGISTER:**
-
-> <a href="https://info.lewagon.com/tokyo-vuejs" target="_blank">https://info.lewagon.com/tokyo-vuejs</a>
-
-Note: the slide version of this workshop is available [here](https://slides.trouni.com/?src=trouni/workshop-vuejs-todo).
+Note: the slide version of this workshop is available [here](https://slides.trouni.com/?src=trouni/workshop-vue3-todo).
 
 ---
 
@@ -22,7 +18,9 @@ Note: the slide version of this workshop is available [here](https://slides.trou
 Clone the git repository for this workshop and get into the project folder.
 
 ```sh
-git clone https://github.com/trouni/workshop-vue3-todo.git
+gh repo clone trouni/workshop-vue3-todo
+# OR if you don't have the gh CLI:
+# git clone git@github.com:trouni/workshop-vue3-todo.git
 
 cd workshop-vue3-todo
 ```
@@ -58,6 +56,7 @@ Not required, but you can also install these useful tools:
 
 ```html
 <!-- Component.vue -->
+
 <script>
   // Data & logic
 </script>
@@ -70,7 +69,6 @@ Not required, but you can also install these useful tools:
   /* Styling */
 </style>
 ```
-
 
 
 ### Creating your first components
@@ -90,6 +88,7 @@ Then import the component in your `App.vue` file.
 
 ```vue
 <!-- App.vue -->
+
 <script setup>
 import TasksList from './components/TasksList.vue';
 </script>
@@ -167,24 +166,23 @@ You can use this styling I prepared for the card, but we should first move the t
 </style>
 ```
 
-
+---
 
 ## Making dynamic components
 
 
 ### Defining the State of a Component
 
-Let's define some data and use the mustache syntax `{{ variable }}` to interpolate the values in our HTML template.
-
-**💡Tip**: Install the awesome [Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd), a Chrome extension to inspect data (and more) in your Vue app.
+Any top-level bindings (including variables, function declarations, and imports) declared inside `<script setup>` are directly usable in the template using the `{{ variable }}` syntax:
 
 ```vue
 <!-- TaskCard.vue -->
 
 <script setup>
-  const title = "Make the card component dynamic"
-  const description = "Learn about using the data option and passing data to child components using props"
-  const done = false
+// Any variable or function defined here is directly accessible in the template
+const title = "Make the card component dynamic"
+const description = "Learn about using the data option and passing data to child components using props"
+const done = false
 </script>
 
 <template>
@@ -207,13 +205,15 @@ We need to tell Vue that the component should be updated every time a change is 
 <!-- TaskCard.vue -->
 
 <script setup>
-  import { ref } from 'vue';
+import { ref } from 'vue';
 
-  const title = ref("Make the card component dynamic")
-  const description = ref("Learn about using the data option and passing data to child components using props")
-  const done = ref(false)
+const title = ref("Make the card component dynamic")
+const description = ref("Learn about using the data option and passing data to child components using props")
+const done = ref(false)
 </script>
 ```
+
+**💡Tip**: Use the [Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd), to interact with your data and see how changes re-render the component.
 
 
 **We want our component to be reusable:**
@@ -228,7 +228,7 @@ Let's assign the `title` and `description` dynamically.
 Props are basically special data attributes **that come from the parent component**.
 
 
-Let's replace the `data` option with `props`:
+Let's replace our variables and define some props using `defineProps`:
 
 ```vue
 <!-- TaskCard.vue -->
@@ -243,7 +243,7 @@ defineProps({
 ```
 
 
-We can now pass the `title` and `description` from the parent component instead:
+We can now pass the `title` and `description` when rendering the `TaskCard` component instead (in the parent component):
 
 ```vue
 <!-- TasksList.vue <template> -->
@@ -255,12 +255,12 @@ We can now pass the `title` and `description` from the parent component instead:
 />
 ```
 
-
+---
 
 ## Vue Directives
 
 
-Add some tasks to help us implement our app:
+Let's define multiple tasks to make things more interesting:
 
 ```vue
 <!-- TasksList.vue -->
@@ -294,24 +294,29 @@ const tasks = reactive([
 
 We want to use the values from our `tasks` in the `title` and `description` attributes of our `TaskCard` component, but mustaches cannot be used inside HTML attributes.
 
-Instead, use a `v-bind` directive (shorthand `:`).
+Instead, we use a `v-bind` directive (shorthand `:`).
 
 ```vue
-<!-- TasksList.vue <template> -->
+<!-- TasksList.vue -->
 
-<TaskCard v-bind:title="tasks[0].title" v-bind:description="tasks[0].description" v-bind:done="tasks[0].done" />
-<TaskCard v-bind:title="tasks[1].title" v-bind:description="tasks[1].description" v-bind:done="tasks[1].done" />
+<template>
+  <TaskCard v-bind:title="tasks[0].title" v-bind:description="tasks[0].description" v-bind:done="tasks[0].done" />
+  <!-- OR using the shorthand: -->
+  <TaskCard :title="tasks[1].title" :description="tasks[1].description" :done="tasks[1].done" />
+</template>
 ```
 
 
 ### Binding HTML Classes
 
-We can bind the class attribute to add a `done` class to the card when the task is completed.
+We can apply classes conditionally too!. For example, we add a `.done` class to the card when the task is completed (`done` is `true`).
 
 ```vue
-<!-- TaskCard.vue <template> -->
-
-<div :class="['task-card', { done }]">
+<!-- TaskCard.vue -->
+<template>
+  <!-- <div :class="['my-first-class', 'another-class', { 'a-conditional-class': conditionToAddTheClass }]"> -->
+  <div :class="['task-card', { done: done }]">
+</template>
 ```
 
 
@@ -357,9 +362,9 @@ Implement an `addTask()` function to push a new task inside of the `tasks` array
 
 <script setup>
 // ...
-  function addTask(title, description, done = false) {
-    tasks.unshift({ title, description, done });
-  }
+function addTask(title, description, done = false) {
+  tasks.unshift({ title, description, done });
+}
 // ...
 </script>
 ```
@@ -437,18 +442,6 @@ const newDescription = ref('')
     ></textarea>
   <!-- ... -->
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      tasks: [],
-      newTitle: "",
-      newDescription: "",
-    };
-  },
-};
-</script>
 ```
 
 
@@ -461,10 +454,10 @@ You can chain actions by separating them with a comma:
 
 <template>
   <!-- ... -->
-    <button
-      class="btn round-icon"
-      @click="addTask(newTitle, newDescription), resetForm()"
-    >＋</button>
+  <button
+    class="btn round-icon"
+    @click="addTask(newTitle, newDescription), resetForm()"
+  >＋</button>
   <!-- ... -->
 </template>
 ```
@@ -476,16 +469,16 @@ Define the new `resetForm()` function. Note that reactive properties need to be 
 <!-- TasksList.vue -->
 
 <script setup>
-  // ...
-  function addTask(title, description, done = false) {
-    tasks.unshift({ title, description, done });
-  }
+// ...
+function addTask(title, description, done = false) {
+  tasks.unshift({ title, description, done });
+}
 
-  function resetForm() {
-    newTitle.value = ""
-    newDescription.value = ""
-  }
-  // ...
+function resetForm() {
+  newTitle.value = ""
+  newDescription.value = ""
+}
+// ...
 </script>
 ```
 
@@ -498,15 +491,15 @@ Let's only show the inputs after we click on the `+` button.
 <!-- TasksList.vue -->
 
 <script setup>
-  // ...
-  const newFormVisible = ref(false)
+// ...
+const newFormVisible = ref(false)
 
-  // ...
-  function resetForm() {
-    newTitle.value = ""
-    newDescription.value = ""
-    newFormVisible.value = false;
-  }
+// ...
+function resetForm() {
+  newTitle.value = ""
+  newDescription.value = ""
+  newFormVisible.value = false;
+}
 </script>
 
 <template>
@@ -526,10 +519,9 @@ Let's only show the inputs after we click on the `+` button.
 </template>
 ```
 
-
+---
 
 ## Bonus
-
 
 
 ### Persist Data with `localStorage`
@@ -547,10 +539,13 @@ const tasks = reactive(JSON.parse(localStorage.getItem("tasks")) || [])
 watch(tasks, (newX) => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 })
+
+function clearTasks() {
+  tasks.splice(0)
+}
 // ...
 </script>
 ```
-
 
 
 ### Send Data to Parent Components using Custom Events
@@ -600,7 +595,6 @@ The parent component `TasksList` listens for the custom `add-task` event, and ca
   <!-- ... -->
 </template>
 ```
-
 
 
 ### Mark Tasks as Done
@@ -706,12 +700,13 @@ Finally, update your `TaskCard` component in your `TasksList.vue` file to pass t
 </template>
 ```
 
+---
 
-### The Finished App
+## The Finished App
 
 You can view the finished code for the app [here](https://github.com/trouni/workshop-vue3-todo/tree/solution).
 
-
+---
 
 ## What to look at next?
 
