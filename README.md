@@ -18,7 +18,7 @@ Note: the slide version of this workshop is available [here](https://slides.trou
 Clone the git repository for this workshop and get into the project folder.
 
 ```sh
-gh repo trouni/workshop-vue3-todo
+gh repo clone trouni/workshop-vue3-todo
 # OR if you don't have the gh CLI:
 # git clone git@github.com:trouni/workshop-vue3-todo.git
 
