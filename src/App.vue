@@ -1,6 +1,7 @@
 <script setup>
 import Github from '@/components/icons/GitHub.vue';
 import Linkedin from '@/components/icons/LinkedIn.vue';
+import TasksList from './components/TasksList.vue';
 </script>
 
 <template>
@@ -10,9 +11,7 @@ import Linkedin from '@/components/icons/LinkedIn.vue';
   </header>
 
   <main>
-    <div style="display: flex; height: 40vh; justify-content: center; align-items: center; font-size: 2.5em;">
-      <p>Let's build our first Vue app!</p>
-    </div>
+    <TasksList />
   </main>
 
   <footer>
