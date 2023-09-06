@@ -260,12 +260,14 @@ We can now pass the `title` and `description` when rendering the `TaskCard` comp
 ## Vue Directives
 
 
-Let's define multiple tasks to make things more interesting:
+Let's define multiple tasks to make things more interesting! Instead of `ref`, we use `reactive` to make objects reactive.
 
 ```vue
 <!-- TasksList.vue -->
 
 <script setup>
+import { reactive } from 'vue';
+
 const tasks = reactive([
   {
     title: "Create a card component",
@@ -355,7 +357,7 @@ Let's display a small message when we have no tasks in our app.
 
 ### Adding Behavior with `methods`
 
-Implement an `addTask()` function to push a new task inside of the `tasks` array.
+Implement an `addTask()` function to push a new task at the beginning of the `tasks` array.
 
 ```vue
 <!-- TasksList.vue -->
@@ -550,12 +552,12 @@ function clearTasks() {
 
 ### Send Data to Parent Components using Custom Events
 
-To pass data _upstream_ from a child to a parent component: 
+To pass data **upstream** (_i.e._ from a child to a parent component): 
 1. the child component emits a custom event using `$emit('custom-event')`
 2. the parent component listens for that event using `v-on:custom-event=` (or `@custom-event=`)
 
 
-Let's move the input fields and style from `TasksList` to a new component `NewTask`. In this component, we remove the `addTask` method and replace it with `$emit` to send a custom event upstream:
+Let's move the input fields and style from `TasksList` to a new component `NewTask`. In this component, we remove the `addTask` method and replace it with `$emit` to send a custom event upstream, that contains the new title and description:
 
 ```vue
 <!-- NewTask.vue -->
